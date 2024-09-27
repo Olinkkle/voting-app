@@ -78,44 +78,40 @@
 
     <h1>Vote for Your Favorite Picture</h1>
 
+    <!-- Hidden iframe for form submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
     <div class="gallery">
+        <!-- Voting form for Picture 1 -->
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 1">
             <p class="description">A beautiful landscape with mountains.</p>
-            <button onclick="vote('picture1')">Vote</button>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
+                <input type="hidden" name="pictureId" value="picture1">
+                <button type="submit">Vote</button>
+            </form>
         </div>
+
+        <!-- Voting form for Picture 2 -->
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 2">
             <p class="description">A serene view of the ocean at sunset.</p>
-            <button onclick="vote('picture2')">Vote</button>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
+                <input type="hidden" name="pictureId" value="picture2">
+                <button type="submit">Vote</button>
+            </form>
         </div>
+
+        <!-- Voting form for Picture 3 -->
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 3">
             <p class="description">A bustling cityscape with towering buildings.</p>
-            <button onclick="vote('picture3')">Vote</button>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
+                <input type="hidden" name="pictureId" value="picture3">
+                <button type="submit">Vote</button>
+            </form>
         </div>
     </div>
-
-    <script>
-        // Function to handle voting and send data to Google Sheets
-        function vote(pictureId) {
-            // Send vote data to Google Sheets via Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ pictureId: pictureId }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Vote recorded:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
 
 </body>
 </html>
