@@ -128,23 +128,20 @@
         function submitVote() {
             // Get the selected picture
             const selectedPicture = document.querySelector('input[name="picture"]:checked');
-            
+
             if (selectedPicture) {
-                // Send the selected picture ID to Google Apps Script
-                fetch('https://script.google.com/macros/s/AKfycbwhzoWfHy8VHNgTO16rG1Ryu0DHoTM5rcoI-7itNhkbp6eJx2iiiZUxFtbWjOoIIqHe/exec', {
+                // Send the selected picture ID to Google Apps Script as a POST request
+                fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ pictureId: selectedPicture.value }),
+                    body: JSON.stringify({ pictureId: selectedPicture.value }), // Data being sent to the script
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // Show the thank-you message
                         document.getElementById('thankYouMessage').style.display = 'block';
-
-                        // Optionally, hide the form after submission to prevent multiple votes
                         document.getElementById('voteForm').style.display = 'none';
                     } else {
                         alert('Error: ' + data.message);
