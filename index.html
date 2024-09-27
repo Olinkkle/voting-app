@@ -118,7 +118,7 @@
             
             if (selectedPicture) {
                 // Send the selected picture ID to Google Apps Script
-                fetch('https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec', {
+                fetch('https://script.google.com/macros/s/AKfycbwhzoWfHy8VHNgTO16rG1Ryu0DHoTM5rcoI-7itNhkbp6eJx2iiiZUxFtbWjOoIIqHe/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -127,7 +127,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    alert('Vote successfully recorded!');
+                    if (data.status === 'success') {
+                        alert('Vote successfully recorded!');
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
                     console.log('Vote recorded:', data);
                 })
                 .catch(error => {
