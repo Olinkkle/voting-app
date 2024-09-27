@@ -67,6 +67,14 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Thank-you message style */
+        .thank-you-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+            display: none; /* Hidden by default */
+        }
     </style>
 </head>
 <body>
@@ -110,6 +118,11 @@
         <button type="button" onclick="submitVote()">Submit Vote</button>
     </form>
 
+    <!-- Thank You Message -->
+    <div class="thank-you-message" id="thankYouMessage">
+        Thank you! Your vote has been recorded.
+    </div>
+
     <script>
         // Function to handle vote submission
         function submitVote() {
@@ -128,7 +141,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        alert('Vote successfully recorded!');
+                        // Show the thank-you message
+                        document.getElementById('thankYouMessage').style.display = 'block';
+
+                        // Optionally, hide the form after submission to prevent multiple votes
+                        document.getElementById('voteForm').style.display = 'none';
                     } else {
                         alert('Error: ' + data.message);
                     }
