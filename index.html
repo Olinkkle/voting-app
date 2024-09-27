@@ -55,7 +55,7 @@
         }
 
         button {
-            margin-top: 10px;
+            margin-top: 20px;
             padding: 10px;
             background-color: #007bff;
             color: white;
@@ -78,40 +78,66 @@
 
     <h1>Vote for Your Favorite Picture</h1>
 
-    <!-- Hidden iframe for form submission -->
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <!-- Voting Form -->
+    <form id="voteForm">
+        <div class="gallery">
+            <!-- Picture 1 -->
+            <div class="picture">
+                <img src="https://via.placeholder.com/200" alt="Picture 1">
+                <p class="description">A beautiful landscape with mountains.</p>
+                <input type="radio" id="picture1" name="picture" value="picture1">
+                <label for="picture1">Select Picture 1</label>
+            </div>
 
-    <div class="gallery">
-        <!-- Voting form for Picture 1 -->
-        <div class="picture">
-            <img src="https://via.placeholder.com/200" alt="Picture 1">
-            <p class="description">A beautiful landscape with mountains.</p>
-            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
-                <input type="hidden" name="pictureId" value="picture1">
-                <button type="submit">Vote</button>
-            </form>
+            <!-- Picture 2 -->
+            <div class="picture">
+                <img src="https://via.placeholder.com/200" alt="Picture 2">
+                <p class="description">A serene view of the ocean at sunset.</p>
+                <input type="radio" id="picture2" name="picture" value="picture2">
+                <label for="picture2">Select Picture 2</label>
+            </div>
+
+            <!-- Picture 3 -->
+            <div class="picture">
+                <img src="https://via.placeholder.com/200" alt="Picture 3">
+                <p class="description">A bustling cityscape with towering buildings.</p>
+                <input type="radio" id="picture3" name="picture" value="picture3">
+                <label for="picture3">Select Picture 3</label>
+            </div>
         </div>
 
-        <!-- Voting form for Picture 2 -->
-        <div class="picture">
-            <img src="https://via.placeholder.com/200" alt="Picture 2">
-            <p class="description">A serene view of the ocean at sunset.</p>
-            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
-                <input type="hidden" name="pictureId" value="picture2">
-                <button type="submit">Vote</button>
-            </form>
-        </div>
+        <!-- Submit Button -->
+        <button type="button" onclick="submitVote()">Submit Vote</button>
+    </form>
 
-        <!-- Voting form for Picture 3 -->
-        <div class="picture">
-            <img src="https://via.placeholder.com/200" alt="Picture 3">
-            <p class="description">A bustling cityscape with towering buildings.</p>
-            <form method="POST" action="https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec" target="hidden_iframe">
-                <input type="hidden" name="pictureId" value="picture3">
-                <button type="submit">Vote</button>
-            </form>
-        </div>
-    </div>
+    <script>
+        // Function to handle vote submission
+        function submitVote() {
+            // Get the selected picture
+            const selectedPicture = document.querySelector('input[name="picture"]:checked');
+            
+            if (selectedPicture) {
+                // Send the selected picture ID to Google Apps Script
+                fetch('https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ pictureId: selectedPicture.value }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Vote successfully recorded!');
+                    console.log('Vote recorded:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please select a picture to vote.');
+            }
+        }
+    </script>
 
 </body>
 </html>
