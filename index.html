@@ -11,6 +11,17 @@
             background-color: #f0f0f0;
         }
 
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        header img {
+            max-width: 150px;
+            height: auto;
+        }
+
         h1 {
             margin-top: 20px;
         }
@@ -27,6 +38,7 @@
             border-radius: 10px;
             padding: 10px;
             background-color: white;
+            width: 220px;
         }
 
         img {
@@ -34,6 +46,12 @@
             height: 200px;
             object-fit: cover;
             border-radius: 10px;
+        }
+
+        .description {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
         }
 
         button {
@@ -49,46 +67,55 @@
         button:hover {
             background-color: #0056b3;
         }
-
-        p {
-            margin-top: 10px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
+
+    <!-- Header with Logo -->
+    <header>
+        <img src="logo-url-here" alt="Logo">
+    </header>
+
     <h1>Vote for Your Favorite Picture</h1>
+
     <div class="gallery">
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 1">
+            <p class="description">A beautiful landscape with mountains.</p>
             <button onclick="vote('picture1')">Vote</button>
-            <p id="picture1-votes">Votes: 0</p>
         </div>
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 2">
+            <p class="description">A serene view of the ocean at sunset.</p>
             <button onclick="vote('picture2')">Vote</button>
-            <p id="picture2-votes">Votes: 0</p>
         </div>
         <div class="picture">
             <img src="https://via.placeholder.com/200" alt="Picture 3">
+            <p class="description">A bustling cityscape with towering buildings.</p>
             <button onclick="vote('picture3')">Vote</button>
-            <p id="picture3-votes">Votes: 0</p>
         </div>
     </div>
 
     <script>
-        // Initialize votes
-        let votes = {
-            picture1: 0,
-            picture2: 0,
-            picture3: 0
-        };
-
-        // Function to handle voting
+        // Function to handle voting and send data to Google Sheets
         function vote(pictureId) {
-            votes[pictureId]++;
-            document.getElementById(`${pictureId}-votes`).innerText = `Votes: ${votes[pictureId]}`;
+            // Send vote data to Google Sheets via Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbwtCadML5ZhHAu0CRCFeSNDXbG9z2D3s80VzEY7-ZSmizdfvpJLraXXIgz9MZuZbefe/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pictureId: pictureId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Vote recorded:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     </script>
+
 </body>
 </html>
